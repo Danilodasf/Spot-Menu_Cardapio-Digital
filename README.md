@@ -99,28 +99,3 @@ src/
         └── global.css
 ```
 
-## Produtos do Cardápio
-
-**Hambúrguers (6 opções)**
-- X-Tudo Especial
-- X-Bacon Cheddar
-- Smash Burger Duplo
-- X-Calabresa
-- X-Frango Catupiry
-- X-Salada Fit
-
-**Bebidas (4 opções)**
-- Milkshake de Ovomaltine
-- Refrigerante Lata
-- Suco Natural Laranja
-- Limonada Suíça
-
-## Imagens
-
-Adicione as imagens dos produtos na pasta `public/images/` com os seguintes nomes:
-
-x-tudo.jpg, x-bacon-cheddar.jpg, smash-burger.jpg, x-calabresa.jpg, x-frango-catupiry.jpg, x-salada-fit.jpg, milkshake-ovomaltine.jpg, refrigerante.jpg, suco-laranja.jpg, limonada-suica.jpg
-
-## Licença
-
-Projeto desenvolvido para fins educacionais.
