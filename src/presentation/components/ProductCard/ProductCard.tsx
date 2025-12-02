@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Product } from '@/domain/entities/Product';
 import { useCartContext } from '@/application/contexts/CartContext';
 import './ProductCard.css';
@@ -11,6 +11,33 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
   const [showSuccess, setShowSuccess] = useState(false);
   const { addToCart } = useCartContext();
+  const [imgIndex, setImgIndex] = useState(0);
+
+  const slug = useMemo(() => {
+    const s = product.name
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .replace(/--+/g, '-');
+    return s;
+  }, [product.name]);
+
+  const imageCandidates = useMemo(() => {
+    const arr: string[] = [];
+    if (product.image) arr.push(product.image);
+    const underslug = slug.replace(/-/g, '_');
+    arr.push(`/images/${slug}.webp`);
+    arr.push(`/images/${slug}.jpg`);
+    arr.push(`/images/${slug}.jpeg`);
+    arr.push(`/images/${slug}.png`);
+    arr.push(`/images/${underslug}.webp`);
+    arr.push(`/images/${underslug}.jpg`);
+    arr.push(`/images/${underslug}.jpeg`);
+    arr.push(`/images/${underslug}.png`);
+    return arr;
+  }, [product.image, slug]);
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
@@ -27,10 +54,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <div className="product-card">
       <div className="product-image-container">
         <img 
-          src={product.image} 
+          src={imageCandidates[imgIndex]}
           alt={product.name}
           className="product-image"
           onError={(e) => {
+            const next = imgIndex + 1;
+            if (next < imageCandidates.length) {
+              setImgIndex(next);
+              return;
+            }
             e.currentTarget.src = 'https://via.placeholder.com/300x200?text=Imagem+em+breve';
           }}
         />

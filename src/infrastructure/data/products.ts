@@ -9,7 +9,7 @@ export const products: Product[] = [
     description: 'Hambúrguer, queijo, presunto, bacon, ovo, alface, tomate e molho especial',
     price: 32.90,
     category: 'comida',
-    image: '/images/x-tudo.jpg'
+    image: '/images/x_tudo_especial.webp'
   },
   {
     id: '2',
@@ -17,7 +17,7 @@ export const products: Product[] = [
     description: 'Hambúrguer artesanal 180g, bacon crocante, cheddar cremoso e cebola caramelizada',
     price: 28.90,
     category: 'comida',
-    image: '/images/x-bacon-cheddar.jpg'
+    image: '/images/x_bacon_cheddar.webp'
   },
   {
     id: '3',
@@ -25,7 +25,7 @@ export const products: Product[] = [
     description: 'Dois hambúrgueres smash 100g, queijo americano, picles e molho da casa',
     price: 35.90,
     category: 'comida',
-    image: '/images/smash-burger.jpg'
+    image: '/images/smash_burguer_duplo.webp'
   },
   {
     id: '4',
@@ -33,7 +33,7 @@ export const products: Product[] = [
     description: 'Hambúrguer bovino, calabresa acebolada, queijo mussarela e pimenta',
     price: 29.90,
     category: 'comida',
-    image: '/images/x-calabresa.jpg'
+    image: '/images/x_calabresa.png'
   },
   {
     id: '5',
@@ -41,7 +41,7 @@ export const products: Product[] = [
     description: 'Filé de frango grelhado, catupiry, alface, tomate e molho de ervas',
     price: 26.90,
     category: 'comida',
-    image: '/images/x-frango-catupiry.jpg'
+    image: '/images/x_frango_catupiry.jpg'
   },
   {
     id: '6',
@@ -49,7 +49,7 @@ export const products: Product[] = [
     description: 'Hambúrguer de carne magra, queijo branco, alface, tomate, cenoura e molho light',
     price: 27.90,
     category: 'comida',
-    image: '/images/x-salada-fit.jpg'
+    image: '/images/x_salada.jpg'
   },
   // Bebidas
   {
@@ -58,7 +58,7 @@ export const products: Product[] = [
     description: 'Milkshake cremoso de Ovomaltine com chantilly e cobertura crocante',
     price: 15.90,
     category: 'bebida',
-    image: '/images/milkshake-ovomaltine.jpg'
+    image: '/images/milkshake_ovomaltine.jpg'
   },
   {
     id: '8',
@@ -66,7 +66,7 @@ export const products: Product[] = [
     description: 'Coca-Cola, Guaraná ou Fanta Laranja - 350ml gelado',
     price: 6.90,
     category: 'bebida',
-    image: '/images/refrigerante.jpg'
+    image: '/images/refri_lata.jpg'
   },
   {
     id: '9',
@@ -74,7 +74,7 @@ export const products: Product[] = [
     description: 'Suco de laranja natural espremido na hora - 500ml',
     price: 10.90,
     category: 'bebida',
-    image: '/images/suco-laranja.jpg'
+    image: '/images/suco_natural_laranja.jpg'
   },
   {
     id: '10',
@@ -82,6 +82,6 @@ export const products: Product[] = [
     description: 'Limonada refrescante com leite condensado e limão siciliano',
     price: 12.90,
     category: 'bebida',
-    image: '/images/limonada-suica.jpg'
+    image: '/images/limonada_suica.jpg'
   }
 ];

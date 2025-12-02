@@ -1,6 +1,5 @@
 // Hook personalizado para gerenciar produtos e filtros
 import { useState, useMemo } from 'react';
-import { Product } from '@/domain/entities/Product';
 import { products as initialProducts } from '@/infrastructure/data/products';
 
 export type CategoryFilter = 'todos' | 'comida' | 'bebida';

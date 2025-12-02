@@ -1,7 +1,95 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCartContext } from '@/application/contexts/CartContext';
 import './Cart.css';
+
+type CartItemProps = {
+  item: ReturnType<typeof useCartContext>['items'][number];
+  onQuantityChange: (productId: string, delta: number) => void;
+  onRemove: (productId: string) => void;
+};
+
+const CartItemRow: React.FC<CartItemProps> = ({ item, onQuantityChange, onRemove }) => {
+  const [imgIndex, setImgIndex] = useState(0);
+  const slug = useMemo(() => {
+    const s = item.product.name
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .replace(/--+/g, '-');
+    return s;
+  }, [item.product.name]);
+
+  const imageCandidates = useMemo(() => {
+    const arr: string[] = [];
+    if (item.product.image) arr.push(item.product.image);
+    const underslug = slug.replace(/-/g, '_');
+    arr.push(`/images/${slug}.webp`);
+    arr.push(`/images/${slug}.jpg`);
+    arr.push(`/images/${slug}.jpeg`);
+    arr.push(`/images/${slug}.png`);
+    arr.push(`/images/${underslug}.webp`);
+    arr.push(`/images/${underslug}.jpg`);
+    arr.push(`/images/${underslug}.jpeg`);
+    arr.push(`/images/${underslug}.png`);
+    return arr;
+  }, [item.product.image, slug]);
+
+  return (
+    <div className="cart-item">
+      <img 
+        src={imageCandidates[imgIndex]}
+        alt={item.product.name}
+        className="cart-item-image"
+        onError={(e) => {
+          const next = imgIndex + 1;
+          if (next < imageCandidates.length) {
+            setImgIndex(next);
+            return;
+          }
+          e.currentTarget.src = 'https://via.placeholder.com/100?text=Img';
+        }}
+      />
+      
+      <div className="cart-item-info">
+        <h3>{item.product.name}</h3>
+        <p className="cart-item-price">R$ {item.product.price.toFixed(2)}</p>
+      </div>
+
+      <div className="cart-item-actions">
+        <div className="quantity-control">
+          <button 
+            onClick={() => onQuantityChange(item.product.id, -1)}
+            className="qty-btn"
+          >
+            -
+          </button>
+          <span className="qty-value">{item.quantity}</span>
+          <button 
+            onClick={() => onQuantityChange(item.product.id, 1)}
+            className="qty-btn"
+          >
+            +
+          </button>
+        </div>
+
+        <div className="cart-item-total">
+          R$ {(item.product.price * item.quantity).toFixed(2)}
+        </div>
+
+        <button 
+          onClick={() => onRemove(item.product.id)}
+          className="remove-btn"
+          title="Remover item"
+        >
+          🗑️
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export const Cart: React.FC = () => {
   const { items, removeFromCart, updateQuantity, total, clearCart } = useCartContext();
@@ -45,51 +133,12 @@ export const Cart: React.FC = () => {
       <div className="cart-content">
         <div className="cart-items">
           {items.map(item => (
-            <div key={item.product.id} className="cart-item">
-              <img 
-                src={item.product.image} 
-                alt={item.product.name}
-                className="cart-item-image"
-                onError={(e) => {
-                  e.currentTarget.src = 'https://via.placeholder.com/100?text=Img';
-                }}
-              />
-              
-              <div className="cart-item-info">
-                <h3>{item.product.name}</h3>
-                <p className="cart-item-price">R$ {item.product.price.toFixed(2)}</p>
-              </div>
-
-              <div className="cart-item-actions">
-                <div className="quantity-control">
-                  <button 
-                    onClick={() => handleQuantityChange(item.product.id, -1)}
-                    className="qty-btn"
-                  >
-                    -
-                  </button>
-                  <span className="qty-value">{item.quantity}</span>
-                  <button 
-                    onClick={() => handleQuantityChange(item.product.id, 1)}
-                    className="qty-btn"
-                  >
-                    +
-                  </button>
-                </div>
-
-                <div className="cart-item-total">
-                  R$ {(item.product.price * item.quantity).toFixed(2)}
-                </div>
-
-                <button 
-                  onClick={() => removeFromCart(item.product.id)}
-                  className="remove-btn"
-                  title="Remover item"
-                >
-                  🗑️
-                </button>
-              </div>
-            </div>
+            <CartItemRow
+              key={item.product.id}
+              item={item}
+              onQuantityChange={handleQuantityChange}
+              onRemove={removeFromCart}
+            />
           ))}
         </div>
 

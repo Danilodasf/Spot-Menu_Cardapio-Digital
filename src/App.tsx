@@ -1,5 +1,4 @@
 // Componente raiz da aplicação com configuração de rotas e contextos
-import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CartProvider } from '@/application/contexts/CartContext';
 import { Header } from '@/presentation/components/Header/Header';
